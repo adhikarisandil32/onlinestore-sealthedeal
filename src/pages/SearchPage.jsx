@@ -6,10 +6,10 @@ export default function SearchPage() {
   return (
     <div className="px-8">
       <div className="flex gap-4">
-        <div className="py-4 min-h-[665px] w-1/4 bg-purple-200">
+        <div className="py-4 max-h-[665px] min-h-[250px] w-1/4 overflow-auto">
           <SearchSidebar />
         </div>
-        <div className="w-3/4 bg-purple-300">
+        <div className="w-3/4 max-h-[665px] min-h-[250px] overflow-auto">
           <SearchedContents />
         </div>
       </div>

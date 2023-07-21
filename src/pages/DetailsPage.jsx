@@ -41,8 +41,15 @@ export default function DetailsPage() {
           <div className="text-center font-bold">
             <span>Rated {product?.rating?.rate}/5 by {product?.rating?.count} customers</span>
           </div>
-          <div className="text-center">
-            <button className="px-4 py-1 border-2 border-black rounded-md hover:bg-black hover:text-white">Add to Cart</button>
+          <div className="flex gap-4 justify-center items-center">
+            <div>
+              <button className="px-2 border border-black">-</button>
+              <span className="px-2">Quantity (<span className="font-bold">0</span>)</span>
+              <button className="px-2 border border-black">+</button>
+            </div>
+            <div>
+              <button className="px-4 py-1 border-2 border-black rounded-md hover:bg-black hover:text-white">Add to Cart</button>
+            </div>
           </div>
         </div>
       </div>

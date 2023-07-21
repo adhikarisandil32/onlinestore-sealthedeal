@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react'
 import EachProductCard from '../components/EachProductCard'
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { pushProductsToState } from '../store/slices/productSlice'
+import { callAPI } from '../api/callAPI'
 
 export default function HomePage() {
 
-  const [products, setProducts] = useState()
+  const dispatch = useDispatch()
+  const products = useSelector(state => state.products)
 
   useEffect(() => {
-    const getProducts = async () => {
-      const response = await axios.get("https://fakestoreapi.com/products")
-      setProducts([...response.data])
-    }
-    getProducts()
+    callAPI({dispatch: dispatch, dispatchAction: pushProductsToState})
   }, [])
 
   return (

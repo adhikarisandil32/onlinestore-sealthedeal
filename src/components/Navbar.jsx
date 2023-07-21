@@ -49,7 +49,7 @@ export default function Navbar() {
               className="font-bold block md:inline-block py-1 px-4 hover:bg-black hover:text-white"
             >
               <FontAwesomeIcon icon={faStore} />
-              <span className="px-2">Store</span>
+              <span className="px-2">My Store</span>
             </Link>
           </div>
         </div>
