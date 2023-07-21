@@ -18,7 +18,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<Navigate to="/" />} />
-          <Route path="/details" element={
+          <Route path="/details/:productId" element={
             <React.Suspense fallback={""}>
               <LazyDetailsPage />
             </React.Suspense>
