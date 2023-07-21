@@ -9,7 +9,6 @@ export default function SearchedContents() {
 
   const dispatch = useDispatch()
   const [searchParams] = useSearchParams()
-  console.log(searchParams.get('s'))
   const products = useSelector(state => state.products)
   let filteredProducts = []
 
@@ -17,11 +16,9 @@ export default function SearchedContents() {
     filteredProducts = products.filter(product => {
       return product.title.toLowerCase().includes(searchParams.get('s'))
     })
-    console.log(filteredProducts)
     
   } else {
     filteredProducts = [...products]
-    console.log(filteredProducts)
   }
   
   useEffect(() => {
