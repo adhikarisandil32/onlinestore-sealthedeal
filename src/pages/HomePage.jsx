@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import EachProductCard from '../components/EachProductCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { pushProductsToState } from '../store/slices/productSlice'
