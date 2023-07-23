@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import axios from 'axios'
+import { createSearchParams, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 
@@ -9,7 +9,7 @@ export default function SearchSidebar() {
   // const [showCategoriesList, setShowCategoriesList] = useState(false)
   // const [productCategory, setProductCategory] = useState('')
   const [productName, setProductName] = useState('')
-
+  const navigate = useNavigate()
   /* useEffect(() => {
     const getCategoriesList = async () => {
       const response = await axios.get("https://fakestoreapi.com/products/categories")
@@ -63,6 +63,14 @@ export default function SearchSidebar() {
       <div>
         <button
           className="py-2 px-4 bg-slate-800 rounded-md text-white"
+          onClick={() => {
+            navigate({
+              pathname: "/search",
+              search: createSearchParams({
+                s: productName ? productName : 'any'
+              }).toString()
+            })
+          }}
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
           <span className="px-2">Search</span>
