@@ -62,7 +62,7 @@ export default function Navbar() {
             <FontAwesomeIcon icon={faUser} />
             <span className="px-2">Hello, John</span>
             {
-              userProfileFlag && <div className="absolute top-full -right-px w-[150px] shadow-lg bg-white rounded-lg">
+              userProfileFlag && <div className="py-2 absolute top-full -right-px w-[150px] shadow-lg bg-white rounded-lg">
                 <span
                   className="block w-full px-4 py-1 hover:bg-black hover:text-white"
                 >Profile</span>

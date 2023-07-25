@@ -1,17 +1,36 @@
 import React, {useEffect} from 'react'
 import EachProductCard from '../components/EachProductCard'
 import { useDispatch, useSelector } from 'react-redux'
-import { pushProductsToState } from '../store/slices/productSlice'
-import { callAPI } from '../api/callAPI'
+import { getProductsFromAPI } from '../store/productsSlice'
+import { StatusCode } from '../utils/StateStatusThunk'
 
 export default function HomePage() {
 
   const dispatch = useDispatch()
-  const products = useSelector(state => state.products)
+  const {products, status} = useSelector(state => state.products)
 
   useEffect(() => {
-    callAPI({dispatch: dispatch, dispatchAction: pushProductsToState})
+    dispatch(getProductsFromAPI())
   }, [])
+
+  if(status === StatusCode.LOADING){
+    return(
+      <p className="min-h-[250px] py-4 text-center font-semibold text-xl">Loading...</p>
+    )
+  } else if(status === StatusCode.ERROR){
+    return(
+      <div className="min-h-[250px] flex items-center bg-red-800">
+        <p className="w-full py-4 text-center font-semibold text-xl text-white">
+          <span className="text-6xl">
+            😟
+          </span> <br />
+          <span>
+            Something went wrong. <br /> Please try again!!!
+          </span>
+        </p>
+      </div>
+    )
+  }
 
   return (
     <>
