@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { callAPI } from '../api/callAPI'
-import { pushProductsToState } from '../store/slices/productSlice'
 import EachProductCard from './EachProductCard'
 
 export default function SearchedContents() {
@@ -12,18 +10,18 @@ export default function SearchedContents() {
   const products = useSelector(state => state.products)
   let filteredProducts = []
 
-  if(searchParams.get('s') !== 'any' && searchParams.get('s') !== null){
-    filteredProducts = products.filter(product => {
-      return product.title.toLowerCase().includes(searchParams.get('s'))
-    })
+  // if(searchParams.get('s') !== 'any' && searchParams.get('s') !== null){
+  //   filteredProducts = products.filter(product => {
+  //     return product.title.toLowerCase().includes(searchParams.get('s'))
+  //   })
     
-  } else {
-    filteredProducts = [...products]
-  }
+  // } else {
+  //   filteredProducts = [...products]
+  // }
   
-  useEffect(() => {
-    callAPI({dispatch: dispatch, dispatchAction: pushProductsToState})
-  }, [])
+  // useEffect(() => {
+  //   callAPI({dispatch: dispatch, dispatchAction: pushProductsToState})
+  // }, [])
   
   return (
     <div className="px-8 py-4 flex gap-4 flex-wrap justify-center">
