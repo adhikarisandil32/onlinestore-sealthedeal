@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart } from '../store/cartSlice'
 
 export default function DetailsPage() {
+
+  const dispatch = useDispatch()
 
   const {productId} = useParams()
   const [product, setProduct] = useState()
@@ -22,7 +26,7 @@ export default function DetailsPage() {
           <img
             src={product?.image}
             alt={`Product: ${productId}`}
-            className="max-h-[300px] object-contain"
+            className="max-h-[300px] max-w-[300px] object-contain"
           />
         </div>
         <div className="max-w-[400px] flex flex-col gap-2">
@@ -48,7 +52,12 @@ export default function DetailsPage() {
               <button className="px-2 border border-black">+</button>
             </div>
             <div>
-              <button className="px-4 py-1 border-2 border-black rounded-md hover:bg-black hover:text-white">Add to Cart</button>
+              <button
+                className="px-4 py-1 border-2 border-black rounded-md hover:bg-black hover:text-white"
+                onClick={() => {
+                  dispatch(addToCart(product))
+                }}
+              >Add to Cart</button>
             </div>
           </div>
         </div>
