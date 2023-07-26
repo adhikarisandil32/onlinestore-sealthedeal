@@ -3,16 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faHouse, faStore, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export default function Navbar() {
   const [userProfileFlag, setUserProfileFlag] = useState(false)
+  const {cart: cartProducts} = useSelector(state => state.cart)
 
   const changeUserProfileFlag = () => {
     setUserProfileFlag(!userProfileFlag)
   }
 
   return (
-    <div className="px-2 py-2 bg-slate-100 sticky top-0">
+    <div className="px-2 py-2 bg-slate-100 sticky top-0 z-10">
       <div className="flex flex-col md:flex-row gap-4 justify-between">
         <div className="px-2 py-1 w-fit rounded-lg cursor-pointer border-2 border-black">
           <Link to="/">
@@ -45,11 +47,11 @@ export default function Navbar() {
           </div>
           <div className="w-full md:w-fit text-center border-2 border-black rounded-md">
             <Link
-              to="/store"
+              to="/mystore"
               className="font-bold block md:inline-block py-1 px-4 hover:bg-black hover:text-white"
             >
               <FontAwesomeIcon icon={faStore} />
-              <span className="px-2">My Store</span>
+              <span className="px-2">My Store ({cartProducts.length})</span>
             </Link>
           </div>
         </div>

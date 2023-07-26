@@ -28,7 +28,7 @@ export default function App() {
               <LazySearchPage />
             </React.Suspense>
           } />
-          <Route path="/store" element={
+          <Route path="/mystore" element={
             <React.Suspense fallback={""}>
               <LazyStorePage />
             </React.Suspense>

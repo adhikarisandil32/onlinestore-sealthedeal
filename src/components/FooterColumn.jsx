@@ -15,7 +15,7 @@ export default function FooterColumn() {
         <input
           className="w-full border-b-2 border-black outline-none bg-transparent"
           type="text"
-          placeholder="e-mail"
+          placeholder="example@email.com"
         />
         <button
           className="mt-2 px-4 py-1 border-2 border-black rounded-lg hover:bg-black hover:text-white"
