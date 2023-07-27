@@ -38,7 +38,7 @@ export default function Navbar() {
           </div>
           <div className="w-full md:w-fit text-center border-2 border-black rounded-md">
             <Link
-              to="/search"
+              to="/search?s=&category=all"
               className="font-bold block md:inline-block py-1 px-4 hover:bg-black hover:text-white"
             >
               <FontAwesomeIcon icon={faMagnifyingGlass} />

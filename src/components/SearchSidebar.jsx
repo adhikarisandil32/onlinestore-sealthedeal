@@ -1,81 +1,83 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { getProductsCategories } from '../store/categoriesSlice'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function SearchSidebar() {
 
   // const [categoriesList, setCategoriesList] = useState([])
   // const [showCategoriesList, setShowCategoriesList] = useState(false)
   // const [productCategory, setProductCategory] = useState('')
-  const [productName, setProductName] = useState('')
   const navigate = useNavigate()
-  /* useEffect(() => {
-    const getCategoriesList = async () => {
-      const response = await axios.get("https://fakestoreapi.com/products/categories")
-      setCategoriesList([...response.data])
-    }
-    getCategoriesList()
-  }, []) */
+  const dispatch = useDispatch()
+  const {categories} = useSelector(state => state.categories)
+  
+  const [productName, setProductName] = useState('')
+  let productCategory = 'all'
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    navigate({
+      search: createSearchParams({
+        s: productName,
+        category: productCategory ? productCategory : 'all'
+      }).toString()
+    })
+  }
+
+  useEffect(() => {
+    dispatch(getProductsCategories())
+  }, [])
 
   return (
-    <div className="flex flex-col gap-4">
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <div>
-        <span>Product Name</span>
+        <span className="font-semibold">Product Name</span>
         <input
-          className="w-full px-2 py-1 bg-transparent outline-none border-2 border-black rounded-md"
+          className="w-full px-2 py-1 bg-transparent outline-none border-2 border-black rounded-md text-sm"
           type="text"
-          placeholder="e.g. Hard Drive"
+          placeholder="e.g. hard drive"
           value={productName}
           onChange={(e) => {setProductName(e.target.value)}}
         />
       </div>
-      {/* <div className="relative">
-        <span>Product Category</span>
-        <input
-          className="w-full px-2 py-1 bg-transparent outline-none border-2 border-black rounded-md"
-          type="text"
-          placeholder="e.g. electronics"
-          value={productCategory}
-          onChange={() => {}}
-          onClick={() => {setShowCategoriesList(true)}}
-        />
-        <div className="absolute top-full w-full max-h-[100px] overflow-auto bg-white">
+      <div className="relative">
+        <span className="font-semibold">Product Category</span>
+        <ul className="px-2">
+          <li
+            className="w-fit hover:underline cursor-pointer text-sm"
+            onClick={(e) => {
+              productCategory = 'all'
+              handleSubmit(e)
+            }}
+          >All</li>
           {
-            showCategoriesList &&
-            categoriesList?.map((each, idx) => {
+            categories.map((category, idx) => {
               return (
-                <div
+                <li
                   key={idx}
-                  className="px-2 py-1 hover:bg-black hover:text-white cursor-pointer"
+                  className="w-fit hover:underline cursor-pointer text-sm"
                   onClick={(e) => {
-                    setProductCategory(e.target.innerText)
-                    setShowCategoriesList(false)
+                    productCategory = category
+                    handleSubmit(e)
                   }}
-                >
-                  {each}
-                </div>
+                >{category}</li>
               )
             })
           }
-        </div>
-      </div> */}
+        </ul>
+      </div>
       <div>
         <button
-          className="py-2 px-4 bg-slate-800 rounded-md text-white"
-          onClick={() => {
-            navigate({
-              pathname: "/search",
-              search: createSearchParams({
-                s: productName ? productName : 'any'
-              }).toString()
-            })
-          }}
+          className="py-2 px-4 bg-slate-800 rounded-md text-white text-sm"
+          type="submit"
         >
           <FontAwesomeIcon icon={faMagnifyingGlass} />
           <span className="px-2">Search</span>
         </button>
       </div>
-    </div>
+    </form>
   )
 }
