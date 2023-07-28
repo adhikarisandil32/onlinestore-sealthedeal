@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import EachProductCard from './EachProductCard'
 import { getSearchedProducts } from '../store/searchSlice'
-import { updateSearchedProducts } from '../store/searchSlice'
 import { StatusCode } from '../utils/StateStatusThunk'
 
 export default function SearchedContents() {
@@ -16,9 +15,6 @@ export default function SearchedContents() {
   useEffect(() => {
     dispatch(
       getSearchedProducts(searchParams.get("category") ? searchParams.get("category") : 'all')
-    )
-    dispatch(
-      updateSearchedProducts(searchParams.get("s"))
     )
   }, [searchParams])
 

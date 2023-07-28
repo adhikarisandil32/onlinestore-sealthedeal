@@ -11,19 +11,7 @@ const searchSlice = createSlice({
     searchText: ''
   },
   reducers: {
-    updateSearchedProducts: (state, action) => {
-      state.searchText = action.payload
-      
-      if(state.searchText){
-        state.searchedProducts = state.products.filter(product => {
-          return (
-            product?.title.includes(state.searchText)
-          )
-        })
-      } else {
-        state.searchedProducts = state.products
-      }
-    },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -42,7 +30,6 @@ const searchSlice = createSlice({
 })
 
 export const searchReducer = searchSlice.reducer
-export const {updateSearchedProducts} = searchSlice.actions
 
 export const getSearchedProducts = createAsyncThunk("get/searchedProducts", async (category) => {
   const getURL = category.toLowerCase() === 'all' ?
