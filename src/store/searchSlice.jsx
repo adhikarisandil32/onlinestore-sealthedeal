@@ -1,26 +1,30 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { StatusCode } from "../utils/StateStatusThunk";
 
 const searchSlice = createSlice({
   name: 'search',
   initialState: {
     products: [],
-    status: 'idle'
+    searchedProducts: [],
+    status: StatusCode.IDLE,
+    searchText: ''
   },
   reducers: {
-
+    
   },
   extraReducers: (builder) => {
     builder
       .addCase(getSearchedProducts.fulfilled, (state, action) => {
         state.products = action.payload
-        state.status = 'idle'
+        state.searchedProducts = state.products
+        state.status = StatusCode.IDLE
       })
       .addCase(getSearchedProducts.pending, (state, action) => {
-        state.status = 'pending'
+        state.status = StatusCode.LOADING
       })
       .addCase(getSearchedProducts.rejected, (state, action) => {
-        state.status = 'rejected'
+        state.status = StatusCode.ERROR
       })
   }
 })
