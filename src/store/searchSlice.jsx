@@ -17,7 +17,7 @@ const searchSlice = createSlice({
     builder
       .addCase(getSearchedProducts.fulfilled, (state, action) => {
         state.products = action.payload.data
-        state.searchText = action.payload.searchText
+        state.searchText = action.payload.searchText.toLowerCase()
 
         //Based on the searchText, filter the title or description contain searchText
         state.searchedProducts = state.products.filter(product => {
