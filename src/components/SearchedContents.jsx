@@ -13,8 +13,12 @@ export default function SearchedContents() {
   const {searchedProducts, status} = useSelector(state => state.searchedProducts)
 
   useEffect(() => {
+    const category = searchParams.get("category") ? searchParams.get("category") : 'all'
+    const searchText = searchParams.get("s") ? searchParams.get("s") : ''
+
+    //dipsatch only one argument and that is the payload, if the payloads are more than one data, then send them as one in an object
     dispatch(
-      getSearchedProducts(searchParams.get("category") ? searchParams.get("category") : 'all')
+      getSearchedProducts({category, searchText})
     )
   }, [searchParams])
 

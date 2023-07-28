@@ -13,6 +13,7 @@ export default function SearchSidebar() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const {categories} = useSelector(state => state.categories)
+
   
   const [productName, setProductName] = useState('')
   let productCategory = 'all'
@@ -22,7 +23,7 @@ export default function SearchSidebar() {
     navigate({
       search: createSearchParams({
         s: productName,
-        category: productCategory ? productCategory : 'all'
+        category: productCategory
       }).toString()
     })
   }

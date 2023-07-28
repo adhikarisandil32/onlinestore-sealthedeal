@@ -6,7 +6,7 @@ const searchSlice = createSlice({
   name: 'search',
   initialState: {
     products: [],
-    searchedProducts: [],
+    searchedProducts: [], //this is what will be displayed on the component
     status: StatusCode.IDLE,
     searchText: ''
   },
@@ -16,8 +16,15 @@ const searchSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getSearchedProducts.fulfilled, (state, action) => {
-        state.products = action.payload
-        state.searchedProducts = state.products
+        state.products = action.payload.data
+        state.searchText = action.payload.searchText
+
+        //Based on the searchText, filter the title or description contain searchText
+        state.searchedProducts = state.products.filter(product => {
+          return (
+            product?.title.toLowerCase().includes(state.searchText) || product?.description.toLowerCase().includes(state.searchText)
+          )
+        })
         state.status = StatusCode.IDLE
       })
       .addCase(getSearchedProducts.pending, (state, action) => {
@@ -31,9 +38,10 @@ const searchSlice = createSlice({
 
 export const searchReducer = searchSlice.reducer
 
-export const getSearchedProducts = createAsyncThunk("get/searchedProducts", async (category) => {
-  const getURL = category.toLowerCase() === 'all' ?
+//createAsyncThunk's async function can accept only one argument, if more than one, convert it into an object like below
+export const getSearchedProducts = createAsyncThunk("get/searchedProducts", async ({category, searchText}) => {
+  const productsURL = category.toLowerCase() === 'all' ?
     'https://fakestoreapi.com/products/' : `https://fakestoreapi.com/products/category/${category}`
-  const response = await axios.get(getURL)
-  return response.data
+  const response = await axios.get(productsURL)
+  return {data: response.data, searchText: searchText}
 })
