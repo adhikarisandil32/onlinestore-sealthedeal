@@ -38,7 +38,9 @@ export default function DetailsPage() {
             <span className="text-2xl font-semibold">{product?.title}</span>
           </div>
           <div>
-            <span className="font-bold text-4xl">Price: ${product?.price*quantity}</span>
+            <span className="font-bold text-4xl">
+              Price: ${(product?.price*quantity).toFixed(2)}
+            </span>
           </div>
           <div className="text-l">
             <span className="font-semibold">Product Description:</span> <br />
@@ -74,7 +76,7 @@ export default function DetailsPage() {
               <button
                 className="px-4 py-1 border-2 border-black rounded-md hover:bg-black hover:text-white"
                 onClick={() => {
-                  dispatch(addToCart(product))
+                  dispatch(addToCart({product, quantity}))
                 }}
               >Add to Cart</button>
             </div>
