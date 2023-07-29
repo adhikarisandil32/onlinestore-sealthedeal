@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import { getProductDetails } from '../store/detailsSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../store/cartSlice'
+import { StatusCode } from '../utils/StateStatusThunk'
 
 export default function DetailsPage() {
 
   const dispatch = useDispatch()
+  const [quantity, setQuantity] = useState(1)
 
   const {productId} = useParams()
-  const [product, setProduct] = useState()
+  const {productDetails: product, status} = useSelector(state => state.productDetails)
 
   useEffect(() => {
-    const getProductDetails = async () => {
-      const response = await axios.get(`https://fakestoreapi.com/products/${productId}`)
-      setProduct(response.data)
-    }
-    getProductDetails()
-  })
+    dispatch(getProductDetails(productId))
+  }, [productId])
+
+  if(status === StatusCode.LOADING){
+    return (
+      <p className="min-h-[250px] py-4 text-center font-semibold text-xl">Loading...</p>
+    )
+  }
 
   return (
     <div className="px-8 py-4">
@@ -34,7 +38,7 @@ export default function DetailsPage() {
             <span className="text-2xl font-semibold">{product?.title}</span>
           </div>
           <div>
-            <span className="font-bold text-4xl">Price: ${product?.price}</span>
+            <span className="font-bold text-4xl">Price: ${product?.price*quantity}</span>
           </div>
           <div className="text-l">
             <span className="font-semibold">Product Description:</span> <br />
@@ -47,9 +51,24 @@ export default function DetailsPage() {
           </div>
           <div className="flex gap-4 justify-center items-center">
             <div>
-              <button className="px-2 border border-black">-</button>
-              <span className="px-2">Quantity (<span className="font-bold">0</span>)</span>
-              <button className="px-2 border border-black">+</button>
+              <button
+                className="px-2 py-1 border border-black"
+                onClick={() => {
+                  if(quantity <= 1){
+                    return
+                  }
+                  setQuantity(prev => prev-1)
+                }}
+              >-</button>
+              <span className="px-2">
+                Quantity (<span className="font-bold">{quantity}</span>)
+              </span>
+              <button
+                className="px-2 py-1 border border-black"
+                onClick={() => {
+                  setQuantity(prev => prev+1)
+                }}
+              >+</button>
             </div>
             <div>
               <button
