@@ -7,7 +7,17 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart: (state, action) => {
-      state.cart.push(action.payload)
+      let productAlreadyExists = false
+
+      state.cart.forEach(cartProduct => {
+        if(cartProduct.product.id === action.payload.product.id){
+          cartProduct.quantity = action.payload.quantity
+          productAlreadyExists = true
+        }
+      })
+      if(productAlreadyExists === false){
+        state.cart.push(action.payload)
+      }
     },
     removeFromCart: (state, action) => {
       state.cart.splice(action.payload, 1)

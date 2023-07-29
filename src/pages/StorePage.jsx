@@ -1,11 +1,12 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import EachProductCard from '../components/EachProductCard'
+import StoreProductCard from '../components/StoreProductCard'
 import { removeFromCart } from '../store/cartSlice'
 
 export default function StorePage() {
 
   const {cart: cartProducts} = useSelector(state => state.cart)
+  //cartProducts is an array of objects with two keys, one - product which contains the details of product and two - quantity. Visit cartSlice for more details
   const dispatch = useDispatch()
   
   return (
@@ -14,11 +15,12 @@ export default function StorePage() {
         cartProducts?.map((product, idx) => {
           return (
             <div key={idx} className="relative">
-              <EachProductCard
-                productId={product.id}
-                imgSrc={product.image}
-                productTitle={product.title}
-                productPrice={product.price}
+              <StoreProductCard
+                productId={product.product.id}
+                imgSrc={product.product.image}
+                productTitle={product.product.title}
+                productPrice={product.product.price}
+                productQty={product.quantity}
               />
               <div
                 className="absolute top-1 right-1 bg-white cursor-pointer"
